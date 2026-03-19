@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MAC Membership Dashboard — February 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#0f172a;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{height:5px;width:5px}
+::-webkit-scrollbar-track{background:#f1f5f9}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid #e2e8f0;padding:20px 40px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.header-eyebrow{font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
+.header-title{font-size:28px;font-weight:900;color:#0f172a;letter-spacing:-.5px;line-height:1}
+.header-sub{font-size:13px;color:#64748b;margin-top:5px;font-style:italic}
+
+/* MAIN CONTAINER */
+.wrap{max-width:1480px;margin:0 auto;padding:36px 40px}
+
+/* SECTION DIVIDER */
+.sec{margin-bottom:44px}
+.sec-heading{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.sec-bar{width:4px;height:22px;border-radius:3px;flex-shrink:0}
+.sec-bar.green{background:#059669}
+.sec-bar.slate{background:#1e293b}
+.sec-bar.indigo{background:#4f46e5}
+.sec-bar.blue{background:#2563eb}
+.sec-label{font-size:12px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.12em}
+
+/* GRIDS */
+.grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:1200px){.grid-6{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.grid-6,.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}}
+
+/* STAT CARD */
+.stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s}
+.stat-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.09)}
+.stat-title{font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.16em;text-transform:uppercase;line-height:1.3}
+.stat-val{font-size:32px;font-weight:900;color:#0f172a;letter-spacing:-.5px;line-height:1}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.pill{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill.up{background:#ecfdf5;color:#059669;border:1px solid #a7f3d0}
+.pill.dn{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.pill.bl{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
+.stat-desc{font-size:11px;color:#94a3b8;line-height:1.5}
+
+/* KPI CARD */
+.kpi-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.kpi-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;line-height:1.4}
+.kpi-val{font-size:30px;font-weight:900;color:#0f172a;letter-spacing:-.5px;margin-bottom:5px}
+.kpi-sub{font-size:13px;font-weight:700;color:#059669}
+
+/* WHITE CARD */
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.card-head{padding:14px 20px;background:#f8fafc;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.card-head.dark{background:#1e293b;color:#fff}
+.card-head-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+.card-head-badge{font-size:10px;font-weight:800;background:#1e293b;color:#fff;padding:4px 10px;border-radius:7px;letter-spacing:.08em;text-transform:uppercase}
+
+/* TABLES */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{padding:9px 10px;font-size:9px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid #f1f5f9;white-space:nowrap;background:#f8fafc;text-align:right}
+th:first-child{text-align:left}
+th.c{text-align:center}
+td{padding:8px 10px;border-bottom:1px solid #f8fafc;white-space:nowrap;font-size:11px;text-align:right}
+td:first-child{text-align:left}
+td.c{text-align:center}
+tr:hover td{background:#f8fafc}
+.tfoot-dark{background:#1e293b}
+.tfoot-dark td{color:#fff;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:none;padding:12px 10px}
+.badge-pass{font-size:9px;font-weight:800;padding:3px 9px;border-radius:999px;background:#dcfce7;color:#166534}
+.badge-fail{font-size:9px;font-weight:800;padding:3px 9px;border-radius:999px;background:#fee2e2;color:#991b1b}
+
+/* PIPELINE CASH CARDS */
+.grid-2-eq{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.grid-2-eq{grid-template-columns:1fr}}
+.cash-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,.05);position:relative}
+.cash-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.09);transition:box-shadow .2s}
+.cash-icon-wrap{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px;flex-shrink:0}
+.cash-card-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.cash-card-title{font-size:16px;font-weight:800;color:#0f172a}
+.cash-period{font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+.cash-amount{font-size:36px;font-weight:900;color:#0f172a;letter-spacing:-.5px;line-height:1;margin-bottom:5px}
+.cash-impact{font-size:12px;font-weight:600;color:#64748b;margin-bottom:16px}
+.cash-pills{position:absolute;top:24px;right:24px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.cash-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.cash-pill.up{background:#ecfdf5;color:#059669}
+.cash-pill.dn{background:#fef2f2;color:#dc2626}
+.cash-footer{border-top:1px solid #f1f5f9;padding-top:14px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.cash-footer-label{font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase}
+.cash-footer-val{font-size:13px;font-weight:700;color:#64748b}
+.pipe-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+@media(max-width:800px){.pipe-grid{grid-template-columns:1fr}}
+.pipe-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.pipe-bar-label{font-size:11px;font-weight:700;color:#475569;min-width:130px;text-align:right;flex-shrink:0}
+.pipe-bar-track{flex:1;background:#f1f5f9;border-radius:6px;height:28px;overflow:hidden}
+.pipe-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px}
+.pipe-bar-val{font-size:12px;font-weight:900;color:#fff}
+.pipe-leg-item{border-left:4px solid;padding-left:14px;margin-bottom:14px;padding-top:2px;padding-bottom:2px}
+.pipe-leg-name{font-size:11px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.pipe-leg-desc{font-size:12px;color:#64748b;line-height:1.5}
+
+/* TEACH IT */
+.teach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1100px){.teach-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.teach-grid{grid-template-columns:1fr}}
+.teach-card{background:#eef2ff;border:1px solid #c7d2fe;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;transition:box-shadow .2s}
+.teach-card:hover{box-shadow:0 6px 24px rgba(79,70,229,.12)}
+.teach-ctx{display:flex;align-items:flex-start;gap:10px}
+.teach-dot{width:8px;height:8px;border-radius:50%;background:#4f46e5;flex-shrink:0;margin-top:2px}
+.teach-ctx-label{font-size:11px;font-weight:800;color:#312e81;text-transform:uppercase;letter-spacing:.1em;line-height:1.4}
+.teach-quote{border-left:3px solid #818cf8;padding-left:14px}
+.teach-quote p{font-size:13px;color:#3730a3;line-height:1.7;font-style:italic}
+
+/* HOW TO toggle */
+.howto-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1e293b;color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit}
+.howto-btn:hover{background:#334155}
+.howto-panel{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:24px;margin-top:14px;display:none}
+.howto-panel.open{display:block}
+.howto-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;max-width:860px}
+.howto-head{font-size:9px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.howto-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #f1f5f9}
+.howto-row span:first-child{color:#64748b;font-weight:600}
+.howto-row span:last-child{font-weight:800}
+.tag-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tag{background:#f1f5f9;border-radius:6px;padding:2px 10px;font-size:10px;font-weight:800;color:#475569;min-width:52px;text-align:center}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 40px;border-top:1px solid #e2e8f0;margin-top:8px}
+.footer p{font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:.25em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="max-width:1480px;margin:0 auto">
+    <div class="header-eyebrow">Multnomah Athletic Club</div>
+    <div class="header-title">Membership Dashboard</div>
+    <div class="header-sub">February 2026 Performance</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ── MMM INTRO ── -->
+<div class="sec" style="margin-bottom:28px">
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #e2e8f0">
+      <div style="padding:22px 28px;border-right:1px solid #e2e8f0">
+        <div style="font-size:10px;font-weight:800;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">Monthly</div>
+        <div style="font-size:17px;font-weight:700;color:#0f172a;margin-bottom:4px">What just happened</div>
+        <div style="font-size:12px;color:#94a3b8">Single-month snapshot</div>
+      </div>
+      <div style="padding:22px 28px;border-right:1px solid #e2e8f0;background:#f0fdfa">
+        <div style="font-size:10px;font-weight:800;color:#0d9488;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">6-Month Rolling Average</div>
+        <div style="font-size:17px;font-weight:700;color:#0f172a;margin-bottom:4px">The pace we're operating at</div>
+        <div style="font-size:12px;color:#0d9488">Primary decision lens</div>
+      </div>
+      <div style="padding:22px 28px">
+        <div style="font-size:10px;font-weight:800;color:#475569;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">12-Month Rolling Average</div>
+        <div style="font-size:17px;font-weight:700;color:#0f172a;margin-bottom:4px">The baseline trend</div>
+        <div style="font-size:12px;color:#64748b">Structural direction</div>
+      </div>
+    </div>
+    <div style="padding:18px 28px;background:#f8fafc">
+      <p style="font-size:13px;color:#475569;line-height:1.75">Each month we track dozens of membership metrics. The MMM consolidates them into one consistent view so we see direction, not just activity. Elections, resignations, and billing timing don't always line up — a single month can look unusually strong or weak. The MMM shows what's normal and what's truly changing. We look at all three, but decisions are based on pace, not one month.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── HOW TO READ ── -->
+<div class="sec">
+  <div class="sec-heading"><span class="sec-bar slate"></span><span class="sec-label">How to Read This Dashboard</span></div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr 1fr 1fr">
+
+    <div style="padding:22px 24px;border-right:1px solid #f1f5f9">
+      <div style="font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px">Reference Dates</div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f8fafc"><span style="font-size:12px;color:#64748b">Report Month</span><span style="font-size:12px;font-weight:800;color:#0f172a">Feb 2026</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f8fafc"><span style="font-size:12px;color:#64748b">YTD</span><span style="font-size:12px;font-weight:800;color:#0f172a">Jan + Feb 2026</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f8fafc"><span style="font-size:12px;color:#64748b">MoM</span><span style="font-size:12px;font-weight:800;color:#0f172a">Jan 2026</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f8fafc"><span style="font-size:12px;color:#64748b">YoY</span><span style="font-size:12px;font-weight:800;color:#0f172a">Feb 2025</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f8fafc"><span style="font-size:12px;color:#64748b">6-mo Rolling</span><span style="font-size:12px;font-weight:800;color:#0f172a">Sep–Feb</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0"><span style="font-size:12px;color:#64748b">12-mo Rolling</span><span style="font-size:12px;font-weight:800;color:#0f172a">Mar–Feb</span></div>
+    </div>
+
+    <div style="padding:22px 24px;border-right:1px solid #f1f5f9">
+      <div style="font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px">What Labels Mean</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="background:#f1f5f9;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;color:#475569;min-width:48px;text-align:center">MOM</span><span style="font-size:12px;font-weight:600;color:#0f172a">Month over Month</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="background:#f1f5f9;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;color:#475569;min-width:48px;text-align:center">YOY</span><span style="font-size:12px;font-weight:600;color:#0f172a">Year over Year</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="background:#f1f5f9;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;color:#475569;min-width:48px;text-align:center">6-MO</span><span style="font-size:12px;font-weight:600;color:#0f172a">Current pace</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="background:#f1f5f9;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;color:#475569;min-width:48px;text-align:center">12-MO</span><span style="font-size:12px;font-weight:600;color:#0f172a">Baseline trend</span></div>
+    </div>
+
+    <div style="padding:22px 24px;border-right:1px solid #f1f5f9">
+      <div style="font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px">Revenue Table Columns</div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+        <span style="background:#f1f5f9;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:800;color:#475569;flex-shrink:0;margin-top:1px">A/D/T</span>
+        <span style="font-size:12px;color:#475569;line-height:1.55">Last month's base run rate, adjusted for all <strong style="color:#0f172a">adds, drops, and transfers</strong> that month.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span style="background:#f1f5f9;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:800;color:#475569;flex-shrink:0;margin-top:1px">ADJ</span>
+        <span style="font-size:12px;color:#475569;line-height:1.55"><strong style="color:#0f172a">Adjustments:</strong> reinstatements, credits, back-dues, and similar one-time corrections.</span>
+      </div>
+    </div>
+
+    <div style="padding:22px 24px">
+      <div style="font-size:9px;font-weight:800;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px">Why Multiple Horizons</div>
+      <p style="font-size:12px;color:#475569;line-height:1.65;margin-bottom:10px">Any single month can look stronger or weaker than it really is. A large election class, a billing timing shift, or an unusual resignation cluster can all distort the picture.</p>
+      <p style="font-size:12px;color:#475569;line-height:1.65">The rolling averages account for those one-time variations so the report shows what's genuinely changing in membership — not just what happened to fall in this particular month.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── THREE PILLARS ── -->
+<div class="sec">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.05)">
+
+    <div style="padding:28px 28px 32px;border-right:1px solid #e2e8f0">
+      <div style="width:4px;height:32px;background:#0d9488;border-radius:3px;margin-bottom:16px"></div>
+      <h3 style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:10px">Pipeline Runway</h3>
+      <p style="font-size:14px;font-weight:600;color:#0d9488;margin-bottom:14px;line-height:1.4">Does the pipeline support our election pace?</p>
+      <p style="font-size:13px;color:#64748b;line-height:1.6">Can we continue electing at our current pace using today's pipeline.</p>
+    </div>
+
+    <div style="padding:28px 28px 32px;border-right:1px solid #e2e8f0">
+      <div style="width:4px;height:32px;background:#0d9488;border-radius:3px;margin-bottom:16px"></div>
+      <h3 style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:10px">Member Movement</h3>
+      <p style="font-size:14px;font-weight:600;color:#0d9488;margin-bottom:14px;line-height:1.4">Are we replacing resignations at a healthy rhythm?</p>
+      <p style="font-size:13px;color:#64748b;line-height:1.6">Maintain steady Replacement Ratios (Accounts &amp; Dues).</p>
+    </div>
+
+    <div style="padding:28px 28px 32px">
+      <div style="width:4px;height:32px;background:#0d9488;border-radius:3px;margin-bottom:16px"></div>
+      <h3 style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:10px">Dues &amp; Budget</h3>
+      <p style="font-size:14px;font-weight:600;color:#0d9488;margin-bottom:14px;line-height:1.4">Is the dues base supporting the budget?</p>
+      <p style="font-size:13px;color:#64748b;line-height:1.6">Are net dues and mix aligned with plan, separate from one-time adjustments?</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FEBRUARY 2026 KPIs ── -->
+<div class="sec">
+  <div class="grid-6" id="stat-cards"></div>
+</div>
+
+<!-- ── DUES REVENUE OVERVIEW ── -->
+<div class="sec">
+  <div class="sec-heading"><span class="sec-bar green"></span><span class="sec-label">Dues Revenue Overview</span></div>
+  <div class="grid-4" id="kpi-cards"></div>
+  <div class="card" style="margin-top:20px">
+    <div class="card-head dark"><span class="card-head-title" style="color:#fff">Annual Revenue Summary</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th style="text-align:left">Year</th>
+          <th>Actual Revenue</th>
+          <th>Budget Goal</th>
+          <th>Variance $</th>
+          <th>Variance %</th>
+        </tr></thead>
+        <tbody id="annual-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── PIPELINE ── -->
+<div class="sec">
+  <div class="sec-heading"><span class="sec-bar blue"></span><span class="sec-label">Membership Pipeline — Current Candidate Status</span></div>
+
+  <!-- Top card: bar chart + legend -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-head">
+      <p style="font-size:13px;color:#64748b;line-height:1.6;max-width:580px">Five pathways to membership (Waitlist, Legacy, Spouse, Diversity Admissions, Athletic). Every applicant moves through the same governance-controlled admissions pipeline.</p>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 18px;display:flex;align-items:flex-start;gap:14px">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Total in Pipeline</div>
+          <div style="font-size:22px;font-weight:900;color:#1e40af;line-height:1.1">371</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;padding-top:2px">
+          <span class="pill dn" style="font-size:10px">▼ -2.9% MoM <span style="font-weight:400;opacity:.7">(was 382)</span></span>
+          <span class="pill dn" style="font-size:10px">▼ -4.9% YoY <span style="font-weight:400;opacity:.7">(was 390)</span></span>
+        </div>
+      </div>
+    </div>
+    <div style="padding:24px">
+      <div class="pipe-grid">
+        <div id="pipe-bars"></div>
+        <div id="pipe-legend"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pipeline Runway table -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-title">Pipeline Runway History</span></div>
+    <div class="tbl-wrap">
+      <table id="runway-table">
+        <thead><tr>
+          <th style="text-align:left">Mo/Yr</th>
+          <th>Pipeline Accounts</th>
+          <th>New Accounts</th>
+          <th>Monthly Runway</th>
+          <th style="color:#2563eb">6-Mo Rolling</th>
+          <th style="color:#1d4ed8">12-Mo Rolling</th>
+        </tr></thead>
+        <tbody id="runway-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── PIPELINE CASH & CAPITAL ── -->
+<div class="sec">
+  <div class="sec-heading"><span class="sec-bar green"></span><span class="sec-label">Pipeline Cash &amp; Capital — February 2026</span></div>
+  <div class="grid-2-eq">
+
+    <!-- New Deposits -->
+    <div class="cash-card">
+      <div class="cash-pills">
+        <span class="cash-pill up">↗ +99.3% MoM</span>
+        <span class="cash-pill up">↗ +76.9% vs Feb '25</span>
+      </div>
+      <div class="cash-card-header">
+        <div class="cash-card-title">New Deposits</div>
+      </div>
+      <div class="cash-period">February 2026</div>
+      <div class="cash-amount">$115,000</div>
+      <div class="cash-impact">+99.3% Impact</div>
+      <div class="cash-footer">
+        <span class="cash-footer-label">VS Prior Year</span>
+        <span class="cash-footer-val">$65,000</span>
+      </div>
+    </div>
+
+    <!-- Remaining Election Checks -->
+    <div class="cash-card">
+      <div class="cash-pills">
+        <span class="cash-pill dn">↘ -55% MoM</span>
+        <span class="cash-pill dn">↘ -28.8% vs Feb '25</span>
+      </div>
+      <div class="cash-card-header">
+        <div class="cash-card-title">Remaining Election Checks</div>
+      </div>
+      <div class="cash-period">February 2026</div>
+      <div class="cash-amount">$73,000</div>
+      <div class="cash-impact">-55% Impact</div>
+      <div class="cash-footer">
+        <span class="cash-footer-label">VS Prior Year</span>
+        <span class="cash-footer-val">$102,500</span>
+      </div>
+    </div>
+
+    <!-- Application Fees -->
+    <div class="cash-card">
+      <div class="cash-pills">
+        <span class="cash-pill up">↗ +24% MoM</span>
+        <span class="cash-pill up">↗ +121% vs Feb '25</span>
+      </div>
+      <div class="cash-card-header">
+        <div class="cash-card-title">Application Fees</div>
+      </div>
+      <div class="cash-period">February 2026</div>
+      <div class="cash-amount">$3,100</div>
+      <div class="cash-impact">31 Apps</div>
+      <div class="cash-footer">
+        <span class="cash-footer-label">VS Prior Year</span>
+        <span class="cash-footer-val">$1,400</span>
+      </div>
+    </div>
+
+    <!-- Reinstatements -->
+    <div class="cash-card">
+      <div class="cash-pills">
+        <span class="cash-pill dn">↘ -70% MoM</span>
+        <span class="cash-pill dn">↘ -86.2% vs Feb '25</span>
+      </div>
+      <div class="cash-card-header">
+        <div class="cash-card-title">Reinstatements</div>
+      </div>
+      <div class="cash-period">February 2026</div>
+      <div class="cash-amount">$832</div>
+      <div class="cash-impact">-70% Impact</div>
+      <div class="cash-footer">
+        <span class="cash-footer-label">VS Prior Year</span>
+        <span class="cash-footer-val">$6,016</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── REVENUE DEEP-DIVE ── -->
+<div class="sec">
+  <div class="sec-heading"><span class="sec-bar green"></span><span class="sec-label">Dues Revenue Intelligence Deep-Dive</span></div>
+  <div id="rev-tables"></div>
+</div>
+
+<!-- ── MEMBER HISTORY ── -->
+<div class="sec">
+  <div class="sec-heading"><span class="sec-bar slate"></span><span class="sec-label">Multi-Horizon Intelligence — Membership Detailed Trends</span></div>
+  <div class="card">
+    <div class="card-head dark"><span class="card-head-title" style="color:#fff">Complete Chronological History — Jan 2022 through Feb 2026</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th style="text-align:left">Mo/Yr</th>
+          <th>Added Dues</th>
+          <th>Lost Dues</th>
+          <th>Net Dues</th>
+          <th>Monthly Rev</th>
+          <th>Accounts</th>
+          <th>Avg/Unit</th>
+          <th>Preferred</th>
+          <th class="c">Pref Share</th>
+          <th style="color:#2563eb">6-Mo Roll</th>
+          <th style="color:#1d4ed8">12-Mo Roll</th>
+        </tr></thead>
+        <tbody id="history-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── TEACH IT ── -->
+<div class="sec" style="padding-top:12px;border-top:1px solid #e2e8f0;margin-top:8px">
+  <div style="margin-bottom:22px">
+    <h2 style="font-size:32px;font-weight:900;color:#312e81;letter-spacing:-.5px">Teach It</h2>
+    <p style="font-size:15px;color:#64748b;font-style:italic;margin-top:4px">Statements that work in every room.</p>
+  </div>
+  <div class="teach-grid" id="teach-grid"></div>
+</div>
+
+</div><!-- /wrap -->
+
+<div class="footer"><p>Multnomah Athletic Club · Membership Intelligence Dashboard · February 2026</p></div>
+
+<script>
+const f$=(n,d=2)=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fn=(n)=>n==null?'—':'$'+Math.round(n).toLocaleString('en-US');
+
+const STATS=[
+  {title:"TOTAL MEMBERS",value:"21,857",mom:{val:"+0.31%",up:true},yoy:{val:"-1.44%",up:false},desc:"Total active child, junior, intermediate, or adult members"},
+  {title:"TOTAL ACCOUNTS",value:"11,604",mom:{val:"+0.29%",up:true},yoy:{val:"-1.39%",up:false},desc:"One account = one membership (family, couple, or individual)"},
+  {title:"MONTHLY DUES REVENUE",value:"$3.01M",mom:{val:"+2.58%",up:true},yoy:{val:"+5.50%",up:true},extra:{val:"+1.53% vs Budget"}},
+  {title:"ACCOUNTS IN PIPELINE",value:"371",yoy:{val:"-4.9% YoY",up:false},desc:"Pipeline Runway 13.3 months (6-mo rolling)"},
+  {title:"6MO AVG NEW ACCOUNTS",value:"31",yoy:{val:"+10.7% YoY (was 28)",up:true}},
+  {title:"6MO AVG RESIGNATIONS",value:"46",yoy:{val:"+17.9% YoY (was 39)",up:false}}
+];
+
+const KPIS=[
+  {label:"YTD Actual (Jan–Feb 2026)",value:"$5.99M",sub:"+$64K vs budget"},
+  {label:"Feb Base Run Rate (Ann.)",value:"$35.76M",sub:"+$177K vs budget"},
+  {label:"6-Mo Avg Monthly Variance",value:"+$3,282",sub:"Sep 2025 – Feb 2026"},
+  {label:"12-Mo Avg Monthly Variance",value:"+$2,338",sub:"Mar 2025 – Feb 2026"}
+];
+
+const PIPELINE=[
+  {name:'Applicants',value:113,color:'#94a3b8',desc:'Completed application AND paid $100 application fee'},
+  {name:'Deposits/Waitlist',value:27,color:'#60a5fa',desc:'Submitted deposit or on legacy/spouse internal waitlist'},
+  {name:'Processing',value:92,color:'#3b82f6',desc:'Pulled off waitlist; pre-governance review and 30-day posting underway'},
+  {name:'Committee Review',value:42,color:'#2563eb',desc:'Package submitted and under Membership Committee review'},
+  {name:'Invited',value:108,color:'#1d4ed8',desc:'Formally invited to join the club'}
+];
+
+const REV=[
+  {m:1,y:2024,base:2664486.57,adt:2471.91,baseADT:2666958.48,adj:15881.21,revenue:2682839.69,budget:2664486.57,vr:18353.12,vp:"0.69%",r6:null,r12:null,trend:31973838.84},
+  {m:2,y:2024,base:2666958.48,adt:-4512.53,baseADT:2662445.95,adj:-2566.37,revenue:2659879.58,budget:2666958.48,vr:-7078.90,vp:"-0.27%",r6:null,r12:null,trend:32003501.76},
+  {m:3,y:2024,base:2662445.95,adt:-3358.88,baseADT:2659087.07,adj:3597.40,revenue:2662684.47,budget:2664294.00,vr:-1609.53,vp:"-0.06%",r6:null,r12:null,trend:31949351.40},
+  {m:4,y:2024,base:2659087.07,adt:-2000.06,baseADT:2657087.01,adj:-599.61,revenue:2656487.40,budget:2664294.00,vr:-7806.60,vp:"-0.29%",r6:null,r12:null,trend:31909044.84},
+  {m:5,y:2024,base:2657087.01,adt:-4521.73,baseADT:2652565.28,adj:14359.65,revenue:2666924.93,budget:2664235.00,vr:2689.93,vp:"0.10%",r6:null,r12:null,trend:31885044.12},
+  {m:6,y:2024,base:2652565.28,adt:3149.55,baseADT:2655714.83,adj:5269.05,revenue:2660983.88,budget:2664294.00,vr:-3310.12,vp:"-0.12%",r6:206.32,r12:null,trend:31830783.36},
+  {m:7,y:2024,base:2655714.83,adt:-5406.44,baseADT:2650308.39,adj:-7816.66,revenue:2642491.73,budget:2664918.81,vr:-22427.08,vp:"-0.84%",r6:-6590.38,r12:null,trend:31868577.96},
+  {m:8,y:2024,base:2650308.39,adt:731.37,baseADT:2651039.76,adj:6276.61,revenue:2657316.37,budget:2665298.73,vr:-7982.36,vp:"-0.30%",r6:-6740.96,r12:null,trend:31803700.68},
+  {m:9,y:2024,base:2651039.76,adt:-4188.08,baseADT:2646851.68,adj:-3847.82,revenue:2643003.86,budget:2660730.00,vr:-17726.14,vp:"-0.67%",r6:-9427.06,r12:null,trend:31812477.12},
+  {m:10,y:2024,base:2646851.68,adt:-5666.92,baseADT:2641184.76,adj:6963.57,revenue:2648148.33,budget:2662255.00,vr:-14106.67,vp:"-0.53%",r6:-10477.07,r12:null,trend:31762220.16},
+  {m:11,y:2024,base:2641184.76,adt:502.36,baseADT:2641687.12,adj:848.44,revenue:2642535.56,budget:2663128.00,vr:-20592.44,vp:"-0.77%",r6:-14357.47,r12:null,trend:31694217.12},
+  {m:12,y:2024,base:2641687.12,adt:773.44,baseADT:2642460.56,adj:-101.89,revenue:2642358.67,budget:2667137.00,vr:-24778.33,vp:"-0.93%",r6:-17935.50,r12:-8864.59,trend:31700245.44},
+  {m:1,y:2025,base:2814111.56,adt:42282.47,baseADT:2856394.03,adj:769.00,revenue:2857163.03,budget:2831207.00,vr:25956.03,vp:"0.92%",r6:-9871.65,r12:-8231.02,trend:33769338.72},
+  {m:2,y:2025,base:2856394.03,adt:-769.44,baseADT:2855624.59,adj:-2860.09,revenue:2852764.50,budget:2844613.00,vr:8151.50,vp:"0.29%",r6:-7182.68,r12:-6961.82,trend:34276728.36},
+  {m:3,y:2025,base:2855624.59,adt:-8559.48,baseADT:2847065.11,adj:10503.45,revenue:2857568.56,budget:2849588.00,vr:7980.56,vp:"0.28%",r6:-2898.23,r12:-6162.64,trend:34267495.08},
+  {m:4,y:2025,base:2847065.11,adt:-269.52,baseADT:2846795.59,adj:84.41,revenue:2846880.00,budget:2856345.00,vr:-9465.00,vp:"-0.33%",r6:-2124.61,r12:-6300.84,trend:34164781.32},
+  {m:5,y:2025,base:2846795.59,adt:-5004.28,baseADT:2841791.31,adj:2981.30,revenue:2844772.61,budget:2850000.00,vr:-5227.39,vp:"-0.18%",r6:436.23,r12:-6960.62,trend:34161547.08},
+  {m:6,y:2025,base:2841791.31,adt:-4601.08,baseADT:2837190.23,adj:25113.02,revenue:2862303.25,budget:2850000.00,vr:12303.25,vp:"0.43%",r6:6616.49,r12:-5659.51,trend:34101495.72},
+  {m:7,y:2025,base:2837190.23,adt:7842.24,baseADT:2845032.47,adj:12203.57,revenue:2857236.04,budget:2850000.00,vr:7236.04,vp:"0.25%",r6:3496.49,r12:-3187.58,trend:34046282.76},
+  {m:8,y:2025,base:2845032.47,adt:-3394.41,baseADT:2841638.06,adj:3896.91,revenue:2845534.97,budget:2850000.00,vr:-4465.03,vp:"-0.16%",r6:1393.74,r12:-2894.47,trend:34140389.64},
+  {m:9,y:2025,base:2841638.06,adt:-5203.30,baseADT:2836434.76,adj:2246.25,revenue:2838681.01,budget:2850000.00,vr:-11318.99,vp:"-0.40%",r6:-1822.85,r12:-2360.54,trend:34099656.72},
+  {m:10,y:2025,base:2836434.76,adt:-6427.80,baseADT:2830006.96,adj:5069.39,revenue:2835076.35,budget:2850000.00,vr:-14923.65,vp:"-0.52%",r6:-2732.63,r12:-2428.62,trend:34037217.12},
+  {m:11,y:2025,base:2830006.96,adt:-1235.58,baseADT:2828771.38,adj:-4761.86,revenue:2824009.52,budget:2850000.00,vr:-25990.48,vp:"-0.91%",r6:-6193.14,r12:-2878.46,trend:33960083.52},
+  {m:12,y:2025,base:2828771.38,adt:10358.84,baseADT:2839130.22,adj:18515.27,revenue:2857645.49,budget:2850000.00,vr:7645.49,vp:"0.27%",r6:-6969.44,r12:-176.47,trend:33945256.56},
+  {m:1,y:2026,base:2857645.49,adt:122683.66,baseADT:2980329.15,adj:1694.79,revenue:2982023.94,budget:2963020.00,vr:19003.94,vp:"0.64%",r6:-5008.12,r12:-755.81,trend:34291745.88},
+  {m:2,y:2026,base:2980329.15,adt:-2334.82,baseADT:2977994.33,adj:31723.87,revenue:3009718.20,budget:2964440.00,vr:45278.20,vp:"1.53%",r6:3282.42,r12:2338.08,trend:35763949.80},
+];
+
+const HIST=[
+  {m:"Jan",y:2022,add:13879,lost:11722,net:2157,rev:2240203.37,acc:12033,avg:186.17,pref:1140,share:"9.47%",r6:null,r12:null},
+  {m:"Feb",y:2022,add:13302,lost:9636,net:3666,rev:2239454.33,acc:11830,avg:189.30,pref:1140,share:"9.64%",r6:null,r12:null},
+  {m:"Mar",y:2022,add:10708,lost:4314,net:6394,rev:2223240.36,acc:11860,avg:187.46,pref:1149,share:"9.69%",r6:null,r12:null},
+  {m:"Apr",y:2022,add:12527,lost:7029,net:5498,rev:2276258.95,acc:11818,avg:192.61,pref:1143,share:"9.67%",r6:null,r12:null},
+  {m:"May",y:2022,add:8830,lost:6643,net:2187,rev:2279425.47,acc:11877,avg:191.92,pref:1143,share:"9.62%",r6:null,r12:null},
+  {m:"Jun",y:2022,add:8352,lost:8079,net:273,rev:2278602.80,acc:11863,avg:192.08,pref:1139,share:"9.60%",r6:3362.50,r12:null},
+  {m:"Jul",y:2022,add:8773,lost:7688,net:1085,rev:2270758.29,acc:11888,avg:191.01,pref:1135,share:"9.55%",r6:3183.83,r12:null},
+  {m:"Aug",y:2022,add:8166,lost:7677,net:489,rev:2267510.46,acc:11914,avg:190.32,pref:1134,share:"9.52%",r6:2654.33,r12:null},
+  {m:"Sep",y:2022,add:8907,lost:6379,net:2528,rev:2264359.53,acc:11949,avg:189.50,pref:1140,share:"9.54%",r6:2010.00,r12:null},
+  {m:"Oct",y:2022,add:15769,lost:7338,net:8431,rev:2269779.99,acc:11968,avg:189.65,pref:1149,share:"9.60%",r6:2498.83,r12:null},
+  {m:"Nov",y:2022,add:11293,lost:6598,net:4695,rev:2274120.36,acc:11974,avg:189.92,pref:1139,share:"9.51%",r6:2916.83,r12:null},
+  {m:"Dec",y:2022,add:6760,lost:5871,net:889,rev:2302060.47,acc:11999,avg:191.85,pref:1157,share:"9.64%",r6:3019.50,r12:3191.00},
+  {m:"Jan",y:2023,add:10264,lost:13505,net:-3241,rev:2449578.20,acc:11963,avg:204.76,pref:1162,share:"9.71%",r6:2298.50,r12:2741.17},
+  {m:"Feb",y:2023,add:7233,lost:13552,net:-6319,rev:2482183.26,acc:11865,avg:209.20,pref:1157,share:"9.75%",r6:1163.83,r12:1909.08},
+  {m:"Mar",y:2023,add:12134,lost:5578,net:6556,rev:2498585.11,acc:11901,avg:209.95,pref:1157,share:"9.72%",r6:1835.17,r12:1922.58},
+  {m:"Apr",y:2023,add:11498,lost:9353,net:2145,rev:2528886.31,acc:11901,avg:212.49,pref:1160,share:"9.75%",r6:787.50,r12:1643.17},
+  {m:"May",y:2023,add:13631,lost:11004,net:2627,rev:2491986.45,acc:11885,avg:209.67,pref:1159,share:"9.75%",r6:442.83,r12:1679.83},
+  {m:"Jun",y:2023,add:11711,lost:8370,net:3341,rev:2514208.91,acc:11885,avg:211.54,pref:1160,share:"9.76%",r6:851.53,r12:1935.51},
+  {m:"Jul",y:2023,add:7559,lost:7914,net:-355,rev:2510557.16,acc:11898,avg:211.01,pref:1166,share:"9.80%",r6:1332.58,r12:1815.54},
+  {m:"Aug",y:2023,add:10297,lost:6576,net:3721,rev:2498606.38,acc:11948,avg:209.12,pref:1175,share:"9.83%",r6:3005.91,r12:2084.87},
+  {m:"Sep",y:2023,add:7266,lost:10180,net:-2914,rev:2502734.43,acc:11929,avg:209.80,pref:1186,share:"9.94%",r6:1427.66,r12:1631.41},
+  {m:"Oct",y:2023,add:10976,lost:12463,net:-1487,rev:2482426.18,acc:11910,avg:208.43,pref:1194,share:"10.03%",r6:822.25,r12:804.88},
+  {m:"Nov",y:2023,add:8300,lost:5698,net:2602,rev:2496108.88,acc:11913,avg:209.53,pref:1207,share:"10.13%",r6:818.10,r12:630.47},
+  {m:"Dec",y:2023,add:7599,lost:4924,net:2675,rev:2520440.10,acc:11951,avg:210.90,pref:1221,share:"10.22%",r6:707.05,r12:779.29},
+  {m:"Jan",y:2024,add:7472,lost:10292,net:-2820,rev:2682839.69,acc:11958,avg:224.36,pref:1238,share:"10.35%",r6:296.15,r12:814.36},
+  {m:"Feb",y:2024,add:6389,lost:9181,net:-2792,rev:2659879.58,acc:11904,avg:223.44,pref:1241,share:"10.43%",r6:-789.49,r12:1108.21},
+  {m:"Mar",y:2024,add:8124,lost:8021,net:103,rev:2662684.47,acc:11891,avg:223.92,pref:1248,share:"10.50%",r6:-286.64,r12:570.51},
+  {m:"Apr",y:2024,add:6533,lost:9466,net:-2932,rev:2655887.79,acc:11891,avg:223.35,pref:1257,share:"10.57%",r6:-527.52,r12:147.37},
+  {m:"May",y:2024,add:6502,lost:6231,net:270,rev:2666924.93,acc:11885,avg:224.39,pref:1265,share:"10.64%",r6:-916.07,r12:-48.98},
+  {m:"Jun",y:2024,add:8509,lost:8519,net:-10,rev:2660983.88,acc:11829,avg:224.95,pref:1274,share:"10.77%",r6:-1363.59,r12:-328.27},
+  {m:"Jul",y:2024,add:8122,lost:6442,net:1680,rev:2642491.73,acc:11809,avg:223.77,pref:1285,share:"10.88%",r6:-613.51,r12:-158.68},
+  {m:"Aug",y:2024,add:6486,lost:7544,net:-1057,rev:2657316.37,acc:11797,avg:225.25,pref:1297,share:"10.99%",r6:-324.34,r12:-556.91},
+  {m:"Sep",y:2024,add:2679,lost:8300,net:-5620,rev:2643003.86,acc:11760,avg:224.75,pref:1309,share:"11.13%",r6:-1278.40,r12:-782.52},
+  {m:"Oct",y:2024,add:6952,lost:6174,net:778,rev:2648148.33,acc:11769,avg:225.01,pref:1324,share:"11.25%",r6:-659.87,r12:-593.69},
+  {m:"Nov",y:2024,add:6820,lost:5516,net:1303,rev:2642535.56,acc:11764,avg:224.63,pref:1337,share:"11.37%",r6:-487.72,r12:-701.89},
+  {m:"Dec",y:2024,add:4679,lost:8926,net:-4247,rev:2642358.67,acc:11788,avg:224.16,pref:1354,share:"11.49%",r6:-1193.93,r12:-1278.76},
+  {m:"Jan",y:2025,add:10881,lost:7281,net:3600,rev:2855624.59,acc:11769,avg:242.64,pref:1414,share:"12.01%",r6:-873.99,r12:-743.75},
+  {m:"Feb",y:2025,add:8967,lost:5329,net:3638,rev:2852764.50,acc:11768,avg:242.42,pref:1417,share:"12.04%",r6:-91.34,r12:-207.84},
+  {m:"Mar",y:2025,add:5002,lost:7566,net:-2563,rev:2857568.56,acc:11729,avg:243.63,pref:1411,share:"12.03%",r6:418.17,r12:-430.12},
+  {m:"Apr",y:2025,add:6016,lost:8610,net:-2594,rev:2846880.00,acc:11722,avg:242.87,pref:1415,share:"12.07%",r6:-143.95,r12:-401.91},
+  {m:"May",y:2025,add:13673,lost:12131,net:1541,rev:2844772.61,acc:11764,avg:241.82,pref:1409,share:"11.98%",r6:-104.29,r12:-296.00},
+  {m:"Jun",y:2025,add:10619,lost:7373,net:3246,rev:2862303.25,acc:11751,avg:243.58,pref:1410,share:"12.00%",r6:1144.73,r12:-24.60},
+  {m:"Jul",y:2025,add:10520,lost:7689,net:2830,rev:2857236.04,acc:11680,avg:244.63,pref:1421,share:"12.17%",r6:1016.53,r12:71.27},
+  {m:"Aug",y:2025,add:6427,lost:10158,net:-3731,rev:2845534.97,acc:11650,avg:244.25,pref:1421,share:"12.20%",r6:-211.79,r12:-151.56},
+  {m:"Sep",y:2025,add:6358,lost:10495,net:-4136,rev:2838681.01,acc:11623,avg:244.23,pref:1431,share:"12.31%",r6:-473.86,r12:-27.84},
+  {m:"Oct",y:2025,add:5319,lost:6692,net:-1372,rev:2835076.35,acc:11602,avg:244.36,pref:1443,share:"12.44%",r6:-270.28,r12:-207.11},
+  {m:"Nov",y:2025,add:8582,lost:7104,net:1477,rev:2824009.52,acc:11550,avg:244.50,pref:1437,share:"12.44%",r6:-280.97,r12:-192.63},
+  {m:"Dec",y:2025,add:7695,lost:6671,net:1024,rev:2857645.49,acc:11588,avg:246.60,pref:1444,share:"12.46%",r6:-651.44,r12:246.65},
+  {m:"Jan",y:2026,add:12087,lost:7633,net:4453,rev:2934126.33,acc:11571,avg:253.58,pref:1445,share:"12.49%",r6:-380.98,r12:317.78},
+  {m:"Feb",y:2026,add:9872,lost:7543,net:2328,rev:3009718.20,acc:11604,avg:259.37,pref:1444,share:"12.44%",r6:629.12,r12:208.66},
+];
+
+const TEACH=[
+  {ctx:"Opening any membership health conversation",quote:"I want to give you a grounded picture of where MAC's membership stands — not just the month, but the trend. We have a gross flow ratio of 0.97 over the past 11 years. That means for every 100 members we add in any form, we lose about 103. We're not in crisis — but we're in slow structural erosion, and the data is clear about exactly where the drain is. Our Intermediate tier loses roughly two-thirds of its members at age 26 through resignation rather than conversion to full membership. That's the problem we're solving."},
+  {ctx:'On the family tier "decline"',quote:"You'll sometimes hear that Family membership has declined — the 011 Family category is down about 1,100 accounts from 2015. But that narrative misses what actually happened. MAC introduced the Family of 2 category, which didn't exist ten years ago, and it now holds 1,282 accounts. When you add both tiers together, family-type accounts have actually grown by 176 since 2015. The decline you're seeing is product differentiation working correctly — members are sorting into the category that fits their actual household."},
+  {ctx:"On why Intermediate retention is the lever",quote:"Intermediate is our biggest throughput category — about 330 juniors age into it every year, but only about one in three ever converts to Individual membership. The other two-thirds resign, mostly in their mid-20s, right when they're facing student loans and early-career finances. A ten percentage point improvement in that conversion rate — moving from one in three to roughly one in two — compounds into 25–30 additional Individual accounts per year. After five years, that's 150 more long-term members in our base. That's the case for the Earn Down, and it's the case for our retention work."},
+  {ctx:"On the 2025 policy package as a coherent strategy",quote:"The four policy changes we made in 2025 aren't unrelated decisions — they're one strategy. We raised the initiation fee to $7,000 to fund the capital our members use every day. We introduced the Earn Down so that legacy Intermediates don't face that fee as a wall — they face it as a discounted finish line. We formalized the Family of 2 category so that our product menu actually matches how people live. And we moved everyone to monthly billing so that membership feels consistent and transparent from age 18 through the rest of a member's life. Every one of those pieces connects to the same underlying goal: reduce friction at the moments when members are most likely to leave."},
+  {ctx:"On the preferred tier — for a planning conversation",quote:"Our preferred tiers — the members who've earned reduced dues through 30+ years of tenure and age 70 — are what I'd call actuarially stable. We lose about 37 members per year through mortality, concentrated in our oldest tiers. The population will shrink gradually and predictably — that's by design. The planning implication is that our preferred book is a runoff portfolio. It declines on a known schedule. Our growth has to come entirely from the non-preferred side: Family elections, Intermediate conversions, Individual retention."},
+  {ctx:"On the strategic north star",quote:"When I look at the next five years, the question I'm anchoring to is whether we can move our gross flow ratio back above 1.0. That's replacement-level. That's where erosion stops and growth begins. The path is clear: the Earn Down needs to move Intermediate conversion by at least 10 percentage points. The Family product needs to hold the gains we've made in the last decade. And the retention outreach we've built needs to intercept members before the 30+ day disengagement pattern becomes a resignation. None of these are moonshots — together, they're the difference between a membership base that's drifting and one that's building."}
+];
+
+// Render stat cards
+const sc=document.getElementById('stat-cards');
+STATS.forEach(s=>{
+  const pills=[
+    s.mom?`<span class="pill ${s.mom.up?'up':'dn'}">${s.mom.up?'▲':'▼'} ${s.mom.val} MoM</span>`:'',
+    s.yoy?`<span class="pill ${s.yoy.up?'up':'dn'}">${s.yoy.up?'▲':'▼'} ${s.yoy.val} YoY</span>`:'',
+    s.extra?`<span class="pill bl">▲ ${s.extra.val}</span>`:'',
+  ].join('');
+  sc.innerHTML+=`<div class="stat-card"><div class="stat-title">${s.title}</div><div class="stat-val">${s.value}</div><div class="pills">${pills}</div>${s.desc?`<div class="stat-desc">${s.desc}</div>`:''}</div>`;
+});
+
+// Render KPI cards
+const kc=document.getElementById('kpi-cards');
+KPIS.forEach(k=>{
+  kc.innerHTML+=`<div class="kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-val">${k.value}</div><div class="kpi-sub">▲ ${k.sub}</div></div>`;
+});
+
+// Annual summary
+const d24=REV.filter(r=>r.y===2024),d25=REV.filter(r=>r.y===2025),d26=REV.filter(r=>r.y===2026);
+const annual=[
+  {y:'2024',rev:d24.reduce((s,r)=>s+r.revenue,0),bud:d24.reduce((s,r)=>s+r.budget,0),vr:d24.reduce((s,r)=>s+r.vr,0)},
+  {y:'2025',rev:d25.reduce((s,r)=>s+r.revenue,0),bud:d25.reduce((s,r)=>s+r.budget,0),vr:d25.reduce((s,r)=>s+r.vr,0)},
+  {y:'2026 YTD',rev:d26.reduce((s,r)=>s+r.revenue,0),bud:d26.reduce((s,r)=>s+r.budget,0),vr:d26.reduce((s,r)=>s+r.vr,0)},
+];
+const at=document.getElementById('annual-tbody');
+annual.forEach(r=>{
+  const vp=(r.vr/r.bud*100).toFixed(2);
+  const vpColor=r.vr<0?'#dc2626':'#059669';
+  at.innerHTML+=`<tr>
+    <td style="font-weight:700;padding:13px 10px">${r.y}</td>
+    <td style="font-weight:600;color:#334155;padding:13px 10px">${f$(r.rev)}</td>
+    <td style="color:#94a3b8;padding:13px 10px">${f$(r.bud)}</td>
+    <td style="font-weight:800;color:${r.vr<0?'#dc2626':'#059669'};padding:13px 10px">${f$(r.vr)}</td>
+    <td style="font-weight:700;color:${vpColor};padding:13px 10px;text-align:right">${r.vr>=0?'+':''}${vp}%</td>
+  </tr>`;
+});
+
+// Pipeline
+const maxP=Math.max(...PIPELINE.map(p=>p.value));
+const pb=document.getElementById('pipe-bars'),pl=document.getElementById('pipe-legend');
+PIPELINE.forEach(p=>{
+  const pct=Math.round(p.value/maxP*100);
+  pb.innerHTML+=`<div class="pipe-bar-row">
+    <div class="pipe-bar-label">${p.name}</div>
+    <div class="pipe-bar-track">
+      <div class="pipe-bar-fill" style="width:${pct}%;background:${p.color};min-width:50px">
+        <span class="pipe-bar-val">${p.value}</span>
+      </div>
+    </div>
+  </div>`;
+  pl.innerHTML+=`<div class="pipe-leg-item" style="border-left-color:${p.color}">
+    <div class="pipe-leg-name">${p.name}</div>
+    <div class="pipe-leg-desc">${p.desc}</div>
+  </div>`;
+});
+
+// Revenue tables
+function revTable(title,data,showTrend,totLabel,totVal,badge){
+  const th=showTrend?'<th>Ann. Trend</th>':'';
+  const rows=data.map(r=>`<tr>
+    <td style="font-weight:700;font-size:10px;color:#334155">${r.m}/${r.y}</td>
+    <td style="color:#64748b">${f$(r.base)}</td>
+    <td style="font-weight:600;color:${r.adt<0?'#ef4444':'#10b981'}">${f$(r.adt)}</td>
+    <td style="color:#64748b">${f$(r.baseADT)}</td>
+    <td style="color:${r.adj<0?'#f87171':'#94a3b8'}">${f$(r.adj)}</td>
+    <td style="font-weight:800;color:#0f172a">${f$(r.revenue)}</td>
+    <td style="color:#94a3b8">${f$(r.budget)}</td>
+    <td style="font-weight:800;color:${r.vr<0?'#dc2626':'#059669'}">${f$(r.vr)}</td>
+    <td class="c" style="font-weight:700;color:${r.vr<0?'#ef4444':'#10b981'}">${r.vp}</td>
+    <td style="font-weight:700;color:#3b82f6">${r.r6!=null?fn(r.r6):'—'}</td>
+    <td style="font-weight:700;color:#1d4ed8">${r.r12!=null?fn(r.r12):'—'}</td>
+    ${showTrend?`<td style="color:#94a3b8;font-style:italic">${r.trend?fn(r.trend):'—'}</td>`:''}
+  </tr>`).join('');
+  let tfoot='';
+  if(totLabel){
+    const totRev=data.reduce((s,r)=>s+r.revenue,0);
+    const totBud=data.reduce((s,r)=>s+r.budget,0);
+    const totVar=data.reduce((s,r)=>s+r.vr,0);
+    const varColor=totVar<0?'#f87171':'#6ee7b7';
+    tfoot=`<tfoot><tr class="tfoot-dark">
+      <td style="text-align:left">${totLabel}</td>
+      <td></td><td></td><td></td><td></td>
+      <td style="text-align:right;color:#fff;font-size:11px;font-weight:800">${f$(totRev)}</td>
+      <td style="text-align:right;color:#94a3b8;font-size:11px">${f$(totBud)}</td>
+      <td style="text-align:right;font-size:11px;font-weight:800;color:${varColor}">${f$(totVar)}</td>
+      <td></td><td></td><td></td>
+      ${showTrend?'<td></td>':''}
+    </tr></tfoot>`;
+  }
+  const bdg=badge?`<span class="card-head-badge">${badge}</span>`:'';
+  return `<div class="card"><div class="card-head"><span class="card-head-title">${title}</span>${bdg}</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr>
+      <th style="text-align:left">Mo/Yr</th><th>Base Revenue</th><th>A/D/T</th><th>Base+/-ADT</th>
+      <th>Adjustments</th><th style="color:#1e293b">Total Revenue</th><th>Budget</th>
+      <th>Variance $</th><th class="c">Var %</th>
+      <th style="color:#2563eb">Roll 6</th><th style="color:#1d4ed8">Roll 12</th>
+      ${th}
+    </tr></thead>
+    <tbody>${rows}</tbody>${tfoot}
+  </table></div></div>`;
+}
+const r6=REV.slice(-6),r12=REV.slice(-12);
+document.getElementById('rev-tables').innerHTML=
+  revTable('2026 YTD Detail',d26,true,null,null,'Ann. Budget: $35,594,400')+
+  revTable('2024 Full Detail',d24,true,'2024 Totals','$32,003,138.31')+
+  revTable('2025 Full Detail',d25,true,'2025 Totals','$34,182,165.12','Annual Budget: $34,182,165')+
+  revTable('Rolling 6-Month View — Current Operating Pace',r6,false)+
+  revTable('Rolling 12-Month View — Baseline Trend',r12,false);
+
+// History
+const hb=document.getElementById('history-tbody');
+HIST.forEach(r=>{
+  hb.innerHTML+=`<tr style="${r.y===2026?'background:#eff6ff':''}">
+    <td style="font-weight:700;font-size:10px;color:#1e293b">${r.m} ${r.y}</td>
+    <td style="font-weight:700;color:#059669">$${r.add.toLocaleString()}</td>
+    <td style="font-weight:700;color:#ef4444">$${r.lost.toLocaleString()}</td>
+    <td style="font-weight:800;color:${r.net<0?'#dc2626':'#059669'}">$${r.net.toLocaleString()}</td>
+    <td style="font-weight:700;color:#334155">${f$(r.rev)}</td>
+    <td style="font-weight:800">${r.acc.toLocaleString()}</td>
+    <td style="color:#475569">$${r.avg.toFixed(2)}</td>
+    <td style="color:#475569">${r.pref.toLocaleString()}</td>
+    <td class="c" style="font-weight:700">${r.share}</td>
+    <td style="font-weight:700;color:#3b82f6">${r.r6!=null?fn(r.r6):'—'}</td>
+    <td style="font-weight:700;color:#1d4ed8">${r.r12!=null?fn(r.r12):'—'}</td>
+  </tr>`;
+});
+
+// Teach It
+const tg=document.getElementById('teach-grid');
+TEACH.forEach(t=>{
+  tg.innerHTML+=`<div class="teach-card">
+    <div class="teach-ctx"><div class="teach-dot"></div><div class="teach-ctx-label">${t.ctx}</div></div>
+    <div class="teach-quote"><p>"${t.quote}"</p></div>
+  </div>`;
+});
+
+// Pipeline Runway Table
+const RUNWAY=[
+  {m:"Jan",y:2022,pipe:384,new:51,mo:8,r6:null,r12:null},
+  {m:"Feb",y:2022,pipe:432,new:24,mo:18,r6:null,r12:null},
+  {m:"Mar",y:2022,pipe:385,new:45,mo:9,r6:null,r12:null},
+  {m:"Apr",y:2022,pipe:306,new:49,mo:6,r6:null,r12:null},
+  {m:"May",y:2022,pipe:339,new:36,mo:9,r6:null,r12:null},
+  {m:"Jun",y:2022,pipe:310,new:34,mo:9,r6:10,r12:null},
+  {m:"Jul",y:2022,pipe:310,new:36,mo:9,r6:10,r12:null},
+  {m:"Aug",y:2022,pipe:310,new:36,mo:9,r6:10,r12:null},
+  {m:"Sep",y:2022,pipe:300,new:39,mo:8,r6:10,r12:null},
+  {m:"Oct",y:2022,pipe:295,new:57,mo:5,r6:8,r12:null},
+  {m:"Nov",y:2022,pipe:290,new:49,mo:6,r6:8,r12:null},
+  {m:"Dec",y:2022,pipe:280,new:28,mo:10,r6:8,r12:9},
+  {m:"Jan",y:2023,pipe:264,new:37,mo:7,r6:7,r12:9},
+  {m:"Feb",y:2023,pipe:272,new:32,mo:9,r6:7,r12:9},
+  {m:"Mar",y:2023,pipe:301,new:57,mo:5,r6:7,r12:8},
+  {m:"Apr",y:2023,pipe:302,new:54,mo:6,r6:7,r12:8},
+  {m:"May",y:2023,pipe:289,new:58,mo:5,r6:7,r12:7},
+  {m:"Jun",y:2023,pipe:288,new:51,mo:6,r6:6,r12:7},
+  {m:"Jul",y:2023,pipe:298,new:32,mo:9,r6:7,r12:7},
+  {m:"Aug",y:2023,pipe:306,new:40,mo:8,r6:6,r12:7},
+  {m:"Sep",y:2023,pipe:307,new:28,mo:11,r6:7,r12:7},
+  {m:"Oct",y:2023,pipe:272,new:47,mo:6,r6:7,r12:7},
+  {m:"Nov",y:2023,pipe:272,new:32,mo:9,r6:8,r12:7},
+  {m:"Dec",y:2023,pipe:266,new:27,mo:10,r6:9,r12:7},
+  {m:"Jan",y:2024,pipe:273,new:27,mo:10,r6:9,r12:8},
+  {m:"Feb",y:2024,pipe:280,new:24,mo:12,r6:9,r12:8},
+  {m:"Mar",y:2024,pipe:284,new:34,mo:8,r6:9,r12:8},
+  {m:"Apr",y:2024,pipe:288,new:23,mo:13,r6:10,r12:9},
+  {m:"May",y:2024,pipe:293,new:22,mo:13,r6:11,r12:9},
+  {m:"Jun",y:2024,pipe:320,new:33,mo:10,r6:11,r12:10},
+  {m:"Jul",y:2024,pipe:336,new:22,mo:15,r6:12,r12:10},
+  {m:"Aug",y:2024,pipe:340,new:20,mo:17,r6:13,r12:11},
+  {m:"Sep",y:2024,pipe:356,new:17,mo:21,r6:15,r12:12},
+  {m:"Oct",y:2024,pipe:339,new:33,mo:10,r6:14,r12:12},
+  {m:"Nov",y:2024,pipe:348,new:27,mo:13,r6:14,r12:13},
+  {m:"Dec",y:2024,pipe:394,new:23,mo:17,r6:16,r12:13},
+  {m:"Jan",y:2025,pipe:372,new:37,mo:10,r6:15,r12:13},
+  {m:"Feb",y:2025,pipe:390,new:28,mo:14,r6:14,r12:13},
+  {m:"Mar",y:2025,pipe:382,new:22,mo:17,r6:14,r12:14},
+  {m:"Apr",y:2025,pipe:362,new:23,mo:16,r6:15,r12:14},
+  {m:"May",y:2025,pipe:326,new:49,mo:7,r6:13,r12:14},
+  {m:"Jun",y:2025,pipe:358,new:35,mo:10,r6:12,r12:14},
+  {m:"Jul",y:2025,pipe:365,new:39,mo:9,r6:12,r12:13},
+  {m:"Aug",y:2025,pipe:364,new:18,mo:20,r6:13,r12:14},
+  {m:"Sep",y:2025,pipe:388,new:19,mo:20,r6:14,r12:14},
+  {m:"Oct",y:2025,pipe:359,new:26,mo:14,r6:13,r12:14},
+  {m:"Nov",y:2025,pipe:376,new:35,mo:11,r6:14,r12:14},
+  {m:"Dec",y:2025,pipe:383,new:27,mo:14,r6:15,r12:14},
+  {m:"Jan",y:2026,pipe:382,new:42,mo:9,r6:15,r12:13},
+  {m:"Feb",y:2026,pipe:371,new:39,mo:10,r6:13,r12:13},
+];
+const rb=document.getElementById('runway-tbody');
+RUNWAY.forEach(r=>{
+  const is26=r.y===2026;
+  rb.innerHTML+=`<tr style="${is26?'background:#eff6ff':''}">
+    <td style="font-weight:700;font-size:10px;color:#1e293b">${r.m} ${r.y}</td>
+    <td style="font-weight:600;color:#334155">${r.pipe.toLocaleString()}</td>
+    <td style="font-weight:600;color:#334155">${r.new.toLocaleString()}</td>
+    <td style="font-weight:700;color:#0f172a">${r.mo}</td>
+    <td style="font-weight:700;color:#3b82f6">${r.r6!=null?r.r6:'—'}</td>
+    <td style="font-weight:700;color:#1d4ed8">${r.r12!=null?r.r12:'—'}</td>
+  </tr>`;
+});
+</script>
+</body>
+</html>
